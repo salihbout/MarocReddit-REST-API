@@ -1,0 +1,21 @@
+{
+  "name": "marocreddit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "*",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "*",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1"
+  },
+  "author": "Salih B",
+  "license": "ISC"
+}
