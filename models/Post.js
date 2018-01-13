@@ -19,11 +19,11 @@ const postSchema = new Schema({
 const autoPopulateCreatorAndComments = function(next){
     this.populate({
         path: '_creator',
-        select : 'username createdAt -_id'
+        select : 'username  -_id'
     });
     this.populate({
         path: '_comments',
-        select : 'text createdAt _creator',
+        select : 'text  _creator',
         match : { 'isDeleted' : false}
     });
     this.populate({
@@ -35,6 +35,7 @@ const autoPopulateCreatorAndComments = function(next){
 };
 
 postSchema.pre('find',autoPopulateCreatorAndComments);
+postSchema.pre('findOne',autoPopulateCreatorAndComments);
 
 
 const Post = mongoose.model('Post', postSchema);

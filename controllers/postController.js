@@ -26,7 +26,6 @@ postController.post = function(req, res){
         return res.status(200).json({
             success:true,
             Postdata:newPost,
-            Userdata:req.user,
         });
     }).catch( function(err){
         return res.status(500).json({
@@ -40,7 +39,7 @@ postController.getAll = function(req,res){
     db.Post.find({}).then(function(posts){
         return res.status(200).json({
             success:true,
-            data:posts,
+            posts:posts,
         });
     }).catch( function(err){
         return res.status(500).json({
@@ -51,16 +50,16 @@ postController.getAll = function(req,res){
 
 postController.getPost = function(req,res){
 
-    db.Post.findOne({ _id: req.params.id}, function(post){
+    db.Post.findById(req.params.id).then(function(post){
         return res.status(200).json({
             success:true,
-            data:post,
-          });
-        }).catch( function(err){
-            return res.status(500).json({
-                message:err,
-            });
+            post:post,
         });
+    }).catch( function(err){
+        return res.status(500).json({
+            message:err,
+        });
+    });
           
 }
 
