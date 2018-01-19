@@ -15,9 +15,5 @@ const UpvoteSchema = new Schema({
 
 
 
-
-UpvoteSchema.pre('find',);
-
-
 const Upvote = mongoose.model('Upvote', UpvoteSchema);
 module.exports = Upvote;

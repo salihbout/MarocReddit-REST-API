@@ -14,14 +14,14 @@ commentController.post = function(req, res){
         text, 
        _creator : userId,
        _post : postId,
-    });
+    }); 
 
     comment.save().then(function(newComment){
 
         db.Post.findByIdAndUpdate(
             postId, 
             {$push: {'_comments' : newComment._id}}
-        ).then(function(existingPost){
+        ).populate('_comments._creator').then(function(existingPost){
             console.log("newComment");
             console.log(newComment);
             console.log(existingPost);

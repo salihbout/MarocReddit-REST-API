@@ -5,7 +5,6 @@ const postController = {};
 
 postController.post = function(req, res){
 
-
     const {
         title, 
         link,
