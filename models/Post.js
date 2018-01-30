@@ -23,7 +23,7 @@ const autoPopulateCreatorAndComments = function(next){
     });
     this.populate({
         path: '_comments',
-        select : 'text  _creator',
+        select : 'text createdAt  _creator',
         match : { 'isDeleted' : false}
     });
     this.populate({
