@@ -23,14 +23,15 @@ const autoPopulateCreatorAndComments = function(next){
         select : 'username  -_id'
     });
     this.populate({
+        path: '_upvotes',
+        select : 'amount'
+    });
+    this.populate({
         path: '_comments',
         select : 'text createdAt  _creator',
         match : { 'isDeleted' : false}
     });
-    this.populate({
-        path: '_upvotes',
-        select : 'amount'
-    });
+    
 
     next();
 
