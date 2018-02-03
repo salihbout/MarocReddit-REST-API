@@ -13,6 +13,7 @@ const postSchema = new Schema({
     _creator: {type: Schema.ObjectId, ref: 'User'},
     _comments : [{type: Schema.ObjectId, ref:'Comment'}],
     _upvotes : [{type: Schema.ObjectId, ref:'Upvote'}],
+
 });
 
 
@@ -27,7 +28,8 @@ const autoPopulateCreatorAndComments = function(next){
         match : { 'isDeleted' : false}
     });
     this.populate({
-        path: '_upvote',
+        path: '_upvotes',
+        select : 'amount'
     });
 
     next();
