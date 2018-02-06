@@ -8,6 +8,8 @@ var userController = require('./controllers/userController.js');
 var postController = require('./controllers/postController.js');
 var commentController = require('./controllers/commentController.js');
 var upvoteController = require('./controllers/upvoteController.js');
+var roomController = require('./controllers/roomController.js');
+var messageController = require('./controllers/messageController.js');
 
 
 
@@ -37,6 +39,14 @@ routes.post('/vote', upvoteController.upvotePost);
 // Comment Routes
 routes.post('/comment', commentController.post);
 
+//Room Routes
+routes.post('/room', roomController.postRoom)
+routes.get('/chat', roomController.getRooms)
+routes.get('/chat/:id', roomController.getRoom)
+
+//Messages Routes
+routes.post('/message', messageController.postMessage)
+routes.get('/message/:id', messageController.getMessage)
 
 
 module.exports =  routes;

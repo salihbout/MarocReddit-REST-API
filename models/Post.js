@@ -24,7 +24,7 @@ const autoPopulateCreatorAndComments = function(next){
     });
     this.populate({
         path: '_upvotes',
-        select : 'amount'
+       
     });
     this.populate({
         path: '_comments',
@@ -39,6 +39,7 @@ const autoPopulateCreatorAndComments = function(next){
 
 postSchema.pre('find',autoPopulateCreatorAndComments);
 postSchema.pre('findOne',autoPopulateCreatorAndComments);
+
 
 
 const Post = mongoose.model('Post', postSchema);
