@@ -5,14 +5,14 @@ const messageController = {};
 
 messageController.getMessage = (req,res) => {
 
-    db.Message.findById(req.params.id).then(function(post){
+    db.Message.findById(req.params.id).then(function(message){
         return res.status(200).json({
             success:true,
             data:message,
         });
     }).catch( function(err){
         return res.status(500).json({
-            message:err,
+            error:err,
         });
     });
           

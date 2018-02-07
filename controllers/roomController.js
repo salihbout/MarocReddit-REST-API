@@ -4,14 +4,14 @@ var db  = require('./../models');
 const roomController = {};
 
 roomController.getRooms = (req,res) => {
-    db.Room.find({}).select('title description').then(function(rooms){
+    db.Room.find({}).then(function(rooms){
         return res.status(200).json({
             success:true,
             rooms:rooms,
         });
     }).catch( function(err){
         return res.status(500).json({
-            message:err,
+            error:err,
         });
     });
 }
@@ -19,24 +19,17 @@ roomController.getRooms = (req,res) => {
 
 roomController.getRoom = (req,res) => {
 
-    db.Room.findById(req.params.id).populate('_messages').exec(function(err, room){
-        if(err){
-
-            return res.status(500).json({
-            message:err,
-        });
-
-        }else{
-
+    db.Room.findOne({_id : req.params.id}).then( (room) => {
             return res.status(200).json({
-            success:true,
-            room:room,
+                success:true,
+                room:room,
+            });
+        }).catch( (err) => {
+            return res.status(500).json({
+                error:err,
+            });
         });
 
-        }
-        
-          
-});
 
 }
 

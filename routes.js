@@ -34,6 +34,8 @@ routes.get('/post/:id', postController.getPost);
 
 //Upvote Routes
 routes.post('/vote', upvoteController.upvotePost);
+routes.get('/vote', upvoteController.getUpvotes);
+routes.get('/vote/:id', upvoteController.getUpvote);
 
 
 // Comment Routes

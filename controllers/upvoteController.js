@@ -37,4 +37,35 @@ upvoteController.upvotePost = function(req, res){
 }
 
 
+upvoteController.getUpvote = (req, res) =>{
+
+    db.Upvote.findById(req.params.id).then(function(upvote){
+        return res.status(200).json({
+            success:true,
+            data:upvote,
+        });
+    }).catch( function(err){
+        return res.status(500).json({
+            success:false,
+            error:err,
+        });
+    });
+}
+
+
+
+upvoteController.getUpvotes = (req,res) => {
+    db.Upvote.find({}).then(function(upvotes){
+        return res.status(200).json({
+            success:true,
+            upvotes:upvotes,
+        });
+    }).catch( function(err){
+        return res.status(500).json({
+            success : false,
+            error:err,
+        });
+    });
+}
+
 module.exports = upvoteController;

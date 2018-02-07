@@ -24,11 +24,13 @@ const autoPopulateCreatorAndComments = function(next){
     });
     this.populate({
         path: '_upvotes',
+        model : 'Upvote'
+        
        
     });
     this.populate({
         path: '_comments',
-        select : 'text createdAt  _creator',
+        select : 'text createdAt',
         match : { 'isDeleted' : false}
     });
     
