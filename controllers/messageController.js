@@ -3,9 +3,9 @@ var db  = require('./../models');
 
 const messageController = {};
 
-messageController.getMessage = function(req,res){
+messageController.getMessage = (req,res) => {
 
-    db.Room.findById(req.params.id).then(function(post){
+    db.Message.findById(req.params.id).then(function(post){
         return res.status(200).json({
             success:true,
             data:message,
@@ -22,7 +22,7 @@ messageController.getMessage = function(req,res){
 messageController.postMessage = (req, res) => {
 
     const {
-        title, 
+        text, 
         userId,
         roomId
     } = req.body;
@@ -30,7 +30,7 @@ messageController.postMessage = (req, res) => {
 
 
     const message = new db.Message({
-        title, 
+        text, 
         _creator : userId,
        _room : roomId,
         

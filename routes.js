@@ -37,7 +37,7 @@ routes.post('/vote', upvoteController.upvotePost);
 
 
 // Comment Routes
-routes.post('/comment', commentController.post);
+routes.post('/comment',userController.VerifyAuth,passport.authenticate('jwt', { session: false}), commentController.post);
 
 //Room Routes
 routes.post('/room', roomController.postRoom)

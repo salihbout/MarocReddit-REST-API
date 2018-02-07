@@ -16,7 +16,7 @@ const autoPopulateMessages = function(next){
     this.populate({
         path: '_messages',
         select : 'text createdAt  _creator',
-        match : { 'isDeleted' : false}
+        
     });
     
 

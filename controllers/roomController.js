@@ -3,11 +3,11 @@ var db  = require('./../models');
 
 const roomController = {};
 
-roomController.getRooms = function(req,res){
-    db.Room.find({}).then(function(rooms){
+roomController.getRooms = (req,res) => {
+    db.Room.find({}).select('title description').then(function(rooms){
         return res.status(200).json({
             success:true,
-            posts:rooms,
+            rooms:rooms,
         });
     }).catch( function(err){
         return res.status(500).json({
@@ -17,19 +17,27 @@ roomController.getRooms = function(req,res){
 }
 
 
-roomController.getRoom = function(req,res){
+roomController.getRoom = (req,res) => {
 
-    db.Post.findById(req.params.id).then(function(room){
-        return res.status(200).json({
-            success:true,
-            post:room,
-        });
-    }).catch( function(err){
-        return res.status(500).json({
+    db.Room.findById(req.params.id).populate('_messages').exec(function(err, room){
+        if(err){
+
+            return res.status(500).json({
             message:err,
         });
-    });
+
+        }else{
+
+            return res.status(200).json({
+            success:true,
+            room:room,
+        });
+
+        }
+        
           
+});
+
 }
 
 
