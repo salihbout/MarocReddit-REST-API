@@ -30,7 +30,7 @@ routes.post('/authenticate', userController.authenticate);
 routes.post('/post',userController.VerifyAuth,passport.authenticate('jwt', { session: false}), postController.post);
 routes.get('/posts', postController.getAll);
 routes.get('/post/:id', postController.getPost);
-routes.get('/post/:id/upvotes', postController.getPostUpvotes);
+
 
 
 //Upvote Routes
@@ -46,7 +46,7 @@ routes.post('/comment',userController.VerifyAuth,passport.authenticate('jwt', { 
 routes.post('/room', roomController.postRoom)
 routes.get('/chat', roomController.getRooms)
 routes.get('/chat/:id', roomController.getRoom)
-routes.get('/chat/:id/messages', roomController.getRoomMessages)
+
 
 //Messages Routes
 routes.post('/message', messageController.postMessage)

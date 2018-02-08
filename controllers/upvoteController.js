@@ -29,7 +29,7 @@ upvoteController.upvotePost = function(req, res){
             {$push: {'_upvotes' : newUpvote._id}}
 
         ).catch(function(err){
-            res.status(500).json({
+             return res.status(500).json({
             message: err,
             });
         });
@@ -37,9 +37,9 @@ upvoteController.upvotePost = function(req, res){
 
         return res.status(200).json({
             success:true,
-            Postdata:newUpvote,
+            data:newUpvote,
         });
-        
+
     }).catch( function(err){
         return res.status(500).json({
             message:err,

@@ -37,6 +37,17 @@ messageController.postMessage = (req, res) => {
     });
 
     message.save().then((newMessage) => {
+
+        db.Room.findByIdAndUpdate(
+            roomId, 
+            {$push: {'_messages' : newMessage._id}}
+        ).catch(function(err){
+            res.status(500).json({
+            message: err.toString(),
+            });
+        });
+        
+        
         return res.status(200).json({
             success:true,
             data:newMessage,
