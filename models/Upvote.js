@@ -6,7 +6,6 @@ mongoose.Promise = global.Promise;
 
 const UpvoteSchema = new Schema({
 
-    
     amount : Number,
     createdAt:{ type: Date, default: Date.now},
     _creator: {type: Schema.ObjectId, ref: 'User'},

@@ -62,7 +62,7 @@ postController.getPost = function(req,res){
           
 }
 
-postController.UpvotePost = function(req,res){
+/* postController.UpvotePost = function(req,res){
     
         db.Post.find(req.params.id, function(post){
             return res.status(200).json({
@@ -75,6 +75,26 @@ postController.UpvotePost = function(req,res){
                 });
             });
               
-    }
+    } */
 
+
+postController.getPostUpvotes = function(req,res){
+    
+    db.Upvote.find({ _post: req.params.id }).then((upvotes) => {
+
+        return res.status(200).json({
+            success: true,
+            upvotes,
+        });
+
+
+    }).catch((err) => {
+        return res.status(200).json({
+            success: false,
+            errors: err,
+        });
+
+    });
+              
+    }
 module.exports = postController;

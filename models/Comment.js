@@ -12,12 +12,12 @@ const commentSchema = new Schema({
     _post :  {type: Schema.ObjectId, ref: 'Post'}
 });
 
-const autoPopulateCreator = function(next){
+const autoPopulateCreator = function(){
     this.populate({
         path: '_creator',
         select : 'username'
     });
-    next();
+    
 };
 
 commentSchema.pre('find',autoPopulateCreator );

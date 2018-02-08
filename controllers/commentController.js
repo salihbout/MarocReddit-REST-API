@@ -21,23 +21,24 @@ commentController.post = function(req, res){
         db.Post.findByIdAndUpdate(
             postId, 
             {$push: {'_comments' : newComment._id}}
-        ).populate('_comments._creator').then(function(existingPost){
-            console.log("newComment");
-            console.log(newComment);
-            console.log(existingPost);
+        ).then(function(existingPost){
+           
             res.status(200).json({
                 success:true,
                 data:newComment,existingPost
             });
+
         }).catch(function(err){
             res.status(500).json({
             message: err.toString(),
             });
         });
+        
         res.status(200).json({
             success:true,
             data:newComment,
         });
+
     }).catch( function(err){
         res.status(500).json({
             message: err.toString(),

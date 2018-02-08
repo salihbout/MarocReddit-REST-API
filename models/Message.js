@@ -11,12 +11,12 @@ const messageSchema = new Schema({
     _room :  {type: Schema.ObjectId, ref: 'Room'}
 });
 
-const autoPopulateCreator = function(next){
+const autoPopulateCreator = function(){
     this.populate({
         path: '_creator',
         select : 'username'
     });
-    next();
+    
 };
 
 

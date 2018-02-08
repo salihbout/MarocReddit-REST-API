@@ -28,7 +28,7 @@ const userSchema = new Schema({
 
 
 // Encryption for password !
-userSchema.pre('save', function (next) {
+userSchema.pre('save',  (next) => {
     var user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {
@@ -48,7 +48,7 @@ userSchema.pre('save', function (next) {
     }
 });
  
-userSchema.methods.comparePassword = function (passw, cb) {
+userSchema.methods.comparePassword =  (passw, cb) => {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
             return cb(err);

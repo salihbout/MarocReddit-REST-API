@@ -23,10 +23,23 @@ upvoteController.upvotePost = function(req, res){
     }); 
 
     NewUpvote.save().then(function(newUpvote){
+
+        db.Post.findByIdAndUpdate(
+            postId, 
+            {$push: {'_upvotes' : newUpvote._id}}
+
+        ).catch(function(err){
+            res.status(500).json({
+            message: err,
+            });
+        });
+        
+
         return res.status(200).json({
             success:true,
             Postdata:newUpvote,
         });
+        
     }).catch( function(err){
         return res.status(500).json({
             message:err,

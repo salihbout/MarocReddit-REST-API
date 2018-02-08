@@ -1,34 +1,61 @@
-var db  = require('./../models');
+var db = require('./../models');
 
 
 const roomController = {};
 
-roomController.getRooms = (req,res) => {
-    db.Room.find({}).then(function(rooms){
+roomController.getRooms = (req, res) => {
+    db.Room.find({}).then(function (rooms) {
         return res.status(200).json({
-            success:true,
-            rooms:rooms,
+            success: true,
+            rooms: rooms,
         });
-    }).catch( function(err){
+    }).catch(function (err) {
         return res.status(500).json({
-            error:err,
+            error: err,
         });
     });
 }
 
 
-roomController.getRoom = (req,res) => {
+roomController.getRoom = (req, res) => {
 
-    db.Room.findOne({_id : req.params.id}).then( (room) => {
-            return res.status(200).json({
-                success:true,
-                room:room,
-            });
-        }).catch( (err) => {
-            return res.status(500).json({
-                error:err,
-            });
+    db.Room.findOne({ _id: req.params.id }).then((room) => {
+
+        return res.status(200).json({
+            success: true,
+            room: room,
         });
+
+
+    }).catch((err) => {
+        return res.status(200).json({
+            success: false,
+            errors: err,
+        });
+
+    });
+
+
+}
+
+
+roomController.getRoomMessages = (req, res) => {
+
+    db.Message.find({ _room: req.params.id }).then((messages) => {
+
+        return res.status(200).json({
+            success: true,
+            messages,
+        });
+
+
+    }).catch((err) => {
+        return res.status(200).json({
+            success: false,
+            errors: err,
+        });
+
+    });
 
 
 }
@@ -37,26 +64,26 @@ roomController.getRoom = (req,res) => {
 roomController.postRoom = (req, res) => {
 
     const {
-        title, 
+        title,
         description,
     } = req.body;
 
-    
+
 
     const room = new db.Room({
-        title, 
+        title,
         description,
-        
+
     });
 
-    room.save().then(function(newRoom){
+    room.save().then(function (newRoom) {
         return res.status(200).json({
-            success:true,
-            data:newRoom,
+            success: true,
+            data: newRoom,
         });
-    }).catch( function(err){
+    }).catch(function (err) {
         return res.status(500).json({
-            message:err,
+            message: err,
         });
     });
 }

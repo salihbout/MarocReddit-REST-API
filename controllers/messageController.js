@@ -5,7 +5,7 @@ const messageController = {};
 
 messageController.getMessage = (req,res) => {
 
-    db.Message.findById(req.params.id).then(function(message){
+    db.Message.findById(req.params.id).then((message) => {
         return res.status(200).json({
             success:true,
             data:message,
@@ -36,7 +36,7 @@ messageController.postMessage = (req, res) => {
         
     });
 
-    message.save().then(function(newMessage){
+    message.save().then((newMessage) => {
         return res.status(200).json({
             success:true,
             data:newMessage,
