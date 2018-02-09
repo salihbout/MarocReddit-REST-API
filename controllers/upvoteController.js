@@ -22,7 +22,48 @@ upvoteController.upvotePost = function(req, res){
        
     }); 
 
-    NewUpvote.save().then(function(newUpvote){
+    let query =  { _post : postId, _creator : userId }
+
+    db.Upvote.findOneAndUpdate(query, {$set :{ amount: amount}}, {upsert:true}, (err ,upvote) => {
+        
+        if(err) {
+
+            return res.status(500).json({
+                success : false,
+                message: err,
+                });
+        
+        }
+       
+        if(upvote){
+
+        
+            console.log("Error in findOneAndUpdate")
+            db.Post.findOne(
+                {_id : postId}, 
+                {$push: {'_upvotes' : upvote._id}}
+                
+            ).then((post) => {
+                return res.status(500).json({
+                    success : true,
+                    post: post,
+                });
+
+                
+            }).catch(function(err){
+                 return res.status(500).json({
+                    success : false,
+                    message: err,
+                });
+            });
+
+        }
+        
+
+
+    });
+
+/*     NewUpvote.save().then(function(newUpvote){
 
         db.Post.findByIdAndUpdate(
             postId, 
@@ -44,7 +85,7 @@ upvoteController.upvotePost = function(req, res){
         return res.status(500).json({
             message:err,
         });
-    });
+    }); */
 
 
 }
