@@ -9,7 +9,7 @@ const userSchema = new Schema({
     username : {
         type : String,
         required: true,
-        index: {unique: true, dropDups: true},
+        index: {unique: true},
         minLength : [5, " Username must be 5 characters or more"],
     },
     password : {
