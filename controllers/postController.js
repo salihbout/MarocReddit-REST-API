@@ -35,7 +35,7 @@ postController.post = function(req, res){
 
 
 postController.getAll = function(req,res){
-    db.Post.find({}).then(function(posts){
+    db.Post.find({}).sort({createdAt : -1}).then(function(posts){
         return res.status(200).json({
             success:true,
             posts:posts,

@@ -24,40 +24,31 @@ upvoteController.upvotePost = function(req, res){
 
     let query =  { _post : postId, _creator : userId }
 
-    db.Upvote.findOneAndUpdate(query, {$set :{ amount: amount}}, {upsert:true}, (err ,upvote) => {
+    db.Upvote.findOneAndUpdate(query, { _post : postId, _creator : userId, amount: amount}, {upsert:true}, (err ,upvote) => {
         
-        if(err) {
+         if(upvote){
 
-            return res.status(500).json({
-                success : false,
-                message: err,
-                });
-        
-        }
-       
-        if(upvote){
+            db.Post.findOneAndUpdate(
+                {_id : postId}, {$addToSet: {'_upvotes' : upvote._id}}, {new: true}, (err, post) => {
+                if(post){
+                    return res.status(500).json({
+                            success : true,
+                            post: post,
+                     });
 
-        
-            console.log("Error in findOneAndUpdate")
-            db.Post.findOne(
-                {_id : postId}, 
-                {$push: {'_upvotes' : upvote._id}}
-                
-            ).then((post) => {
-                return res.status(500).json({
-                    success : true,
-                    post: post,
-                });
+                }else{
+
+                    
+                }
 
                 
-            }).catch(function(err){
-                 return res.status(500).json({
-                    success : false,
-                    message: err,
-                });
             });
+                
 
-        }
+        }   
+            
+        
+        
         
 
 
