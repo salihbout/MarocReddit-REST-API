@@ -8,10 +8,10 @@ var utils = require('../config/utils');
 
 const userController = {};
 
-userController.post = (req, res) => {
+userController.post = function(req, res) {
     
 
-    //Validation before adding the user tp db
+    //Validation before adding the user to db
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please pass username and password.'});
       } else {
@@ -20,30 +20,36 @@ userController.post = (req, res) => {
     const user = new db.User({
         username: req.body.username,
         password: req.body.password,
-        email:    req.body.email,
+        email:req.body.email,
         isSubscribed : req.body.isSubscribed
 
     });
 
+    
+    user.save().then(newUser => {
 
-    user.save().then( (newUser) => {
-      console.log('adding a nes user ....')
         return res.status(200).json({
             success:true,
             data:newUser,
         });
-    }).catch( (err) => {
+
+
+      }).catch(err => {
+
         return res.status(500).json({
-            success:false, msg: 'Username already exists Or something went wrong !!', err :err
+            err:err.toString(),
         });
     });
+
+
 }
 
 }
 
 require('../config/passport')(passport);
 
-userController.authenticate = (req, res) => {
+userController.authenticate = function (req, res) {
+
     db.User.findOne({
         username: req.body.username
       }, function(err, user) {
@@ -70,8 +76,9 @@ userController.authenticate = (req, res) => {
 
 
 userController.VerifyAuth = function(req, res, next){
+
   var token = utils.getToken(req.headers);
-  if (token && typeof token ==! 'undefined') {
+  if (token) {
       
     var decoded = jwt.decode(token, config.secret);
     console.log(token);

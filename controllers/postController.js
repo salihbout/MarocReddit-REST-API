@@ -21,14 +21,15 @@ postController.post = function(req, res){
        _creator : userId,
     });
 
-    post.save().then(function(newPost){
+    post.save().then(newPost =>{
         return res.status(200).json({
             success:true,
             Postdata:newPost,
         });
-    }).catch( function(err){
+
+    }).catch( err => {
         return res.status(500).json({
-            message:err,
+            message:err.toString(),
         });
     });
 }
