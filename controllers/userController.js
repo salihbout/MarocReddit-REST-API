@@ -37,7 +37,8 @@ userController.post = function(req, res) {
       }).catch(err => {
 
         return res.status(500).json({
-            err:err.toString(),
+          success : false,
+          err:err.toString(),
         });
     });
 

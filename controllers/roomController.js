@@ -4,16 +4,23 @@ var db = require('./../models');
 const roomController = {};
 
 roomController.getRooms = (req, res) => {
-    db.Room.find({}).then(function (rooms) {
-        return res.status(200).json({
-            success: true,
-            rooms: rooms,
-        });
-    }).catch(function (err) {
-        return res.status(500).json({
-            error: err,
-        });
+    db.Room.find({},'title description',function(err, rooms){
+        if(err){
+            return res.status(500).json({
+                success: false,
+                error: err,
+            });
+        }
+
+        if(rooms){
+            return res.status(200).json({
+                success: true,
+                rooms: rooms,
+            });
+
+        }
     });
+    
 }
 
 
