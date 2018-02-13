@@ -36,7 +36,7 @@ messageController.postMessage = (req, res) => {
         
     });
 
-    message.save().then((newMessage) => {
+    message.save().then(function(newMessage){
 
         db.Room.findByIdAndUpdate(
             roomId, 

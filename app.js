@@ -6,11 +6,16 @@ var morgan = require('morgan');
 var routes = require('./routes.js');
 var config = require('./config/database');
 
+
+const app = express();
+
+
+
+
 mongoose.connect(config.database, function(){
     console.log('Connecting to db....');
 });
 
-const app = express();
 
 //Middlewares
 app.use(bodyParser.json()); // get our request parameters
@@ -23,5 +28,8 @@ app.use('/api', routes);
 
 // Start the server
 app.listen(3000);
+
+
+
 
 module.exports = app;
