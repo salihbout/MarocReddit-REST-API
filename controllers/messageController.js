@@ -1,6 +1,7 @@
 var db  = require('./../models');
 
 
+
 const messageController = {};
 
 messageController.getMessage = (req,res) => {
@@ -42,16 +43,42 @@ messageController.postMessage = (req, res) => {
             roomId, 
             {$push: {'_messages' : newMessage._id}}
         ).catch(function(err){
-            res.status(500).json({
+            return res.status(500).json({
             message: err.toString(),
             });
         });
         
-        
-        return res.status(200).json({
-            success:true,
-            data:newMessage,
+        db.User.findById(newMessage._creator).then(user => {
+            console.log(user)
+            if(user){
+                let newMessageToSend = {
+                    _id : newMessage._id,
+                    text : newMessage.text,
+                    _creator : {
+                        _id: user._id,
+                        username: user.username,
+                    },
+                    createdAt : newMessage.createdAt
+                }
+
+                global.io.emit('newMessage',newMessageToSend)
+                return res.status(200).json({
+                    success:true,
+                    data:newMessageToSend,
+                });
+            }
+        }).catch(err =>{
+            return res.status(200).json({
+                success:false,
+                err:err.toString(),
+            });
         });
+
+
+
+        
+        
+       
     }).catch( function(err){
         return res.status(500).json({
             message:err,
