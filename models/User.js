@@ -24,6 +24,10 @@ const userSchema = new Schema({
     isSubscribed :{type: Boolean, default: false},
     isDeleted:{type: Boolean, default: false},
     createdAt:{ type: Date, default: Date.now},
+
+    _postss: [{type: Schema.ObjectId, ref: 'Post'}],
+    _comments : [{type: Schema.ObjectId, ref:'Comment'}],
+    _upvotes : [{type: Schema.ObjectId, ref:'Upvote'}]
 });
 
 

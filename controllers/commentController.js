@@ -16,25 +16,44 @@ commentController.post = function(req, res){
        _post : postId,
     }); 
 
-    comment.save().then(function(newComment){
+    comment.save().then(newComment =>{
+        if(newComment){
 
-        db.Post.findByIdAndUpdate(
-            postId, 
-            {$push: {'_comments' : newComment._id}}
-        ).then(function(existingPost){
-           
-            res.status(200).json({
-                success:true,
-                data:newComment,existingPost
+            db.Post.findByIdAndUpdate(
+                postId, 
+                {$push: {'_comments' : newComment._id}}
+            ).then(function(existingPost){
+               
+                return res.status(200).json({
+                    success:true,
+                    data:newComment,existingPost
+                });
+    
+            }).catch(function(err){
+                return res.status(500).json({
+                message: err.toString(),
+                });
+            });
+    
+            db.User.findByIdAndUpdate(
+                userId, 
+                {$push: {'_comments' : newComment._id}}
+            ).then(function(existingUser){
+               
+                return res.status(200).json({
+                    success:true,
+                    data:newComment,existingUser
+                });
+    
+            }).catch((err) =>{
+                return res.status(500).json({
+                message: err.toString(),
+                });
             });
 
-        }).catch(function(err){
-            res.status(500).json({
-            message: err.toString(),
-            });
-        });
+        }
         
-        res.status(200).json({
+         return res.status(200).json({
             success:true,
             data:newComment,
         });

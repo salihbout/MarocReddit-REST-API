@@ -47,9 +47,9 @@ userController.post = function (req, res) {
 
 },
 
-  userController.get = function (req, res) {
+  userController.getUser = function (req, res) {
 
-    db.User.findOne(req.params.id).populate().then(function (post) {
+    db.User.findOne({_id : req.params.id}).populate('_postss').populate( '_upvotes').populate('_comments').then(function (user) {
       return res.status(200).json({
         success: true,
         user: user,

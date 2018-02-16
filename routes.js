@@ -23,6 +23,7 @@ routes.get('/', basicController.get);
 // User Routes
 routes.post('/signup', userController.post);
 routes.post('/authenticate', userController.authenticate);
+routes.get('/user/:id', userController.getUser)
 
 
 
