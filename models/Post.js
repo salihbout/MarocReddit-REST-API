@@ -20,7 +20,7 @@ const postSchema = new Schema({
 const autoPopulateCreatorAndComments = function ()  {
     this.populate({
         path: '_creator',
-        select : 'username  -_id'
+        select : 'username  _id'
     });
     this.populate({
         path: '_upvotes'

@@ -29,7 +29,7 @@ upvoteController.upvotePost = function(req, res){
          if(upvote){
 
             db.Post.findOneAndUpdate(
-                {_id : postId}, {$addToSet: {'_upvotes' : upvote._id}}, {new: true}, (err, post) => {
+                {_id : postId}, {$addToSet: {'_upvotes' : upvote._id}},  (err, post) => {
                 if(post){
                     return res.status(500).json({
                             success : true,
