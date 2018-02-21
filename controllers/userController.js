@@ -49,17 +49,29 @@ userController.post = function (req, res) {
 
   userController.getUser = function (req, res) {
 
-    db.User.findOne({_id : req.params.id}).populate('_postss').populate( '_upvotes').populate('_comments').then(function (user) {
-      return res.status(200).json({
-        success: true,
-        user: user,
+    db.User.findOne({ _id: req.params.id }).select('-password').populate('_postss')
+      .populate({ path: '_upvotes', populate: { path: '_post', select: 'title _id' } })
+      .populate({ path: '_comments', populate: { path: '_post', select: 'title _id' } })
+      .then(function (user) {
+
+        if (user) {
+          return res.status(200).json({
+            success: true,
+            user: user,
+          });
+        }else{
+          return res.status(500).json({
+            success: false,
+            message: 'User not found !',
+          });
+        }
+
+      }).catch(function (err) {
+        return res.status(500).json({
+          success: false,
+          message: err,
+        });
       });
-    }).catch(function (err) {
-      return res.status(500).json({
-        success: false,
-        message: err,
-      });
-    });
 
   }
 
