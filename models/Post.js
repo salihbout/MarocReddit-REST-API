@@ -11,6 +11,7 @@ const postSchema = new Schema({
     isDeleted:{type: Boolean, default: false},
     createdAt:{ type: Date, default: Date.now},
     _creator: {type: Schema.ObjectId, ref: 'User'},
+    _topic: {type: Schema.ObjectId, ref: 'Topic'},
     _comments : [{type: Schema.ObjectId, ref:'Comment'}],
     _upvotes : [{type: Schema.ObjectId, ref:'Upvote'}]
 
@@ -30,6 +31,10 @@ const autoPopulateCreatorAndComments = function ()  {
         path: '_comments',
         select : 'text createdAt',
         match : { 'isDeleted' : false}
+    });
+    this.populate({
+        path : '_topic',
+        select: 'name description'
     });
     
 

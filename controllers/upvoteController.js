@@ -42,29 +42,31 @@ upvoteController.upvotePost = function (req, res) {
                         post: err,
                     });
                 });
-                
 
-                db.User.findByIdAndUpdate(
-                    userId, 
-                    {$push: {'_upvotes' : upvote._id}}
-                ).then(function(existingUser){
-                   
-                    return res.status(200).json({
-                        success:true,
-                        data:upvote,existingUser
-                    });
-        
-                }).catch((err) =>{
-                    return res.status(500).json({
-                        success:false,
-                        message: err.toString(),
-                    });
+
+            db.User.findByIdAndUpdate(
+                userId,
+                { $push: { '_upvotes': upvote._id } }
+            ).then(function (existingUser) {
+
+                return res.status(200).json({
+                    success: true,
+                    data: upvote, existingUser
                 });
 
-        }else{
+            }).catch((err) => {
+                return res.status(500).json({
+                    success: false,
+                    message: err
+                });
+            });
+
+        }
+
+        if (err) {
             return res.status(500).json({
-                success:false,
-                message: err.toString(),
+                success: false,
+                message: err
             });
         }
 

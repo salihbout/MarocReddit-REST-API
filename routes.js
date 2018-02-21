@@ -10,6 +10,7 @@ var commentController = require('./controllers/commentController.js');
 var upvoteController = require('./controllers/upvoteController.js');
 var roomController = require('./controllers/roomController.js');
 var messageController = require('./controllers/messageController.js');
+var topicController = require('./controllers/topicController.js');
 
 
 
@@ -32,7 +33,10 @@ routes.post('/post',userController.VerifyAuth,passport.authenticate('jwt', { ses
 routes.get('/posts', postController.getAll);
 routes.get('/post/:id', postController.getPost);
 
-
+//Topic Routes
+routes.post('/topic', topicController.postTopic)
+routes.get('/topic', topicController.getTopics)
+routes.get('/topic/:id', topicController.getTopic)
 
 //Upvote Routes
 routes.post('/vote', upvoteController.upvotePost);
